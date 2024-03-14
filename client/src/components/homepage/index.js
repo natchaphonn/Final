@@ -51,6 +51,7 @@ function Homepage({ onLogout }) {
       </Row>
       
       {/* ข้อความต้อนรับ */}
+      <Card.Img variant="top" src='https://github.com/natchaphonn/Final/blob/main/logo.png?raw=true' style={{ width: '200px', height: '200px', margin: 'auto' }} />
       <Row noGutters>
         <h1>Welcome!</h1>
       </Row>

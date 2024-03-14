@@ -42,6 +42,7 @@ function Login({ onLoginSuccessful }) {
   return (
     <Container>
       <Card className="mt-5">
+      <Card.Img variant="top" src='https://github.com/natchaphonn/Final/blob/main/logo.png?raw=true' style={{ width: '200px', height: '200px', margin: 'auto' }} />
         <Card.Header as="h1">Login</Card.Header>
         <Card.Body>
           <Form className="w-100" onSubmit={onSubmit}>
