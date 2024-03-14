@@ -32,6 +32,7 @@ function Homepage({ onLogout }) {
     
     // เรียกใช้ฟังก์ชัน searchArtworks จากไฟล์ api และรอผลลัพธ์
     const artworks = await searchArtworks({ keyword });
+    console.log( artworks )
     
     // กำหนดค่า state ตามผลลัพธ์ที่ได้
     setArtworks(artworks);
@@ -57,7 +58,7 @@ function Homepage({ onLogout }) {
       {/* คำแนะนำในการค้นหา */}
       <Row className="mt-2" noGutters>
         <h6>
-          Enter one or multiple keywords below to search for artworks in the Art
+          Enter keywords below to search for Pets
           Institute of Chicago.
         </h6>
       </Row>
@@ -68,7 +69,7 @@ function Homepage({ onLogout }) {
           <InputGroup>
             <Form.Control
               type="text"
-              placeholder="e.g. Monet, O'Keeffe, Ancient Greek..."
+              placeholder="Cat"
               onChange={onChangeKeyword}
               value={keyword}
             />
@@ -78,7 +79,7 @@ function Homepage({ onLogout }) {
                 disabled={!keyword}
                 type="submit"
               >
-                Search artworks
+                Search Pets
               </Button>
             </InputGroup.Prepend>
           </InputGroup>
@@ -103,35 +104,41 @@ function Homepage({ onLogout }) {
           {artworks.map((artwork, idx) => {
             const {
               id,
-              title,
-              image_url,
-              artist_display,
-              date_display,
-              medium_display,
-              place_of_origin,
+              gender,
+              name,
+              species,
+              sub_species,
+              age,
+              ownner_id,
+              phone,
+              other_contact,
+              picture
             } = artwork;
+            console.log( id );
             return (
               <Card key={`artwork-${id}`}>
                 <a
-                  href={image_url}
+                  //href={image_url}
                   target="_blank"
                   rel="noreferrer"
                   aria-current="true"
                 >
-                  <Card.Img variant="top" src={image_url} />
+                  <Card.Img variant="top" src = {picture} />
                 </a>
                 <Card.Body>
-                  <Card.Title>{title}</Card.Title>
+                  <Card.Title>Name : {name}</Card.Title>
+                  <Card.Title>Sub_species : {sub_species}</Card.Title>
                   <Card.Text
                     className="text-muted"
                     style={{ whiteSpace: "pre-line" }}
                   >
-                    {place_of_origin}, {date_display}
+                    Gender : {gender}<br />
+                    Age : {age} year
                     <br />
-                    <small className="text-muted">{artist_display}</small>
                   </Card.Text>
                   <Card.Text>
-                    <small className="text-muted">{medium_display}</small>
+                  <small className="text-muted">Phone : {phone}</small><br />
+                    <small className="text-muted">Contact : {other_contact}</small>
                   </Card.Text>
                 </Card.Body>
               </Card>

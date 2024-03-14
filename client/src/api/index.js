@@ -21,13 +21,13 @@ export async function searchArtworks({ keyword }) {
   return await fetch(`/api/homepage/getArtworks/${keyword}`, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
-  })
+  }
+  )
     .then((response) => {
       // If request is not successful, display error message
       if (!response.ok) {
-        throw new Error("HTTP status " + response.status);
+        throw new Error("Api status " + response.status);
       }
-
       return response.json();
     })
     .catch((err) => {

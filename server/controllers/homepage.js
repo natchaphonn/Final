@@ -1,35 +1,42 @@
-const fetch = require("cross-fetch");
-const { response } = require("express");
-const AIC_URL = "https://api.artic.edu/api/v1/artworks/search?q=";
+// File: controllers/homepage.js
+const mysql = require('mysql');
+const { response } = require('express');
+const env = require('../env.js');
+const config = require('../dbconfig.js')[env];
 
-const getArtworks = async (req, res = response) => {
+const getArtworks = (req, res = response) => {
   const { keyword } = req.params;
+  // Create connection to MySQL database
+  const dbcon = mysql.createConnection(config);
 
-  try {
-    const resp = await fetch(
-      `${AIC_URL}${keyword}&limit=15&fields=id,title,image_id,date_display,artist_display,place_of_origin,medium_display`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+  // SQL Query
+  const petDetailsQuery = `SELECT * FROM pets WHERE
+  id = '${keyword}' OR
+  gender = '${keyword}' OR
+  gender = '${keyword}' OR
+  name = '${keyword}' OR
+  species = '${keyword}' OR
+  sub_species = '${keyword}' OR
+  age = '${keyword}' OR
+  ownner_id = '${keyword}' OR
+  phone = '${keyword}'`;
 
-    if (resp.status >= 400) {
-      throw new Error("Bad response from server");
+  // Execute query
+  dbcon.query(petDetailsQuery, (err, pet) => {
+    if (err) {
+      return res.status(500).json({ error: 'Internal Server Error' });
     }
 
-    const { data = [] } = await resp.json();
-    const dataWithUrls = data.map((image) => ({
-      ...image,
-      image_url: `https://www.artic.edu/iiif/2/${image.image_id}/full/843,/0/default.jpg`,
-    }));
+    if (pet.length > 0) {
+      console.log(pet);
+      res.json(pet);
+    } else {
+      return res.status(401).json({ message: 'Pet not found!' });
+    }
 
-    res.json(dataWithUrls);
-  } catch (err) {
-    console.error(err);
-  }
+    // Close connection after query is done
+    dbcon.end();
+  });
 };
 
 module.exports = {
