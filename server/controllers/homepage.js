@@ -11,15 +11,15 @@ const getArtworks = (req, res = response) => {
 
   // SQL Query
   const petDetailsQuery = `SELECT * FROM pets WHERE
-  id = '${keyword}' OR
-  gender = '${keyword}' OR
-  gender = '${keyword}' OR
-  name = '${keyword}' OR
-  species = '${keyword}' OR
-  sub_species = '${keyword}' OR
-  age = '${keyword}' OR
-  ownner_id = '${keyword}' OR
-  phone = '${keyword}'`;
+  id LIKE '%${keyword}%' OR
+  gender LIKE '%${keyword}%' OR
+  gender LIKE '%${keyword}%' OR
+  name LIKE '%${keyword}%' OR
+  species LIKE '%${keyword}%' OR
+  sub_species LIKE '%${keyword}%' OR
+  age LIKE '%${keyword}%' OR
+  ownner_id LIKE '%${keyword}%' OR
+  phone LIKE '%${keyword}%'`;
 
   // Execute query
   dbcon.query(petDetailsQuery, (err, pet) => {
